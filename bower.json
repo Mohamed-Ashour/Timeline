@@ -1,0 +1,23 @@
+{
+  "name": "timeline1",
+  "authors": [
+    "Mohamed Ashour <e.mohamed77@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-animate": "^1.6.2",
+    "angular-bootstrap": "^2.5.0",
+    "angular-timeline": "^1.7.0",
+    "bootstrap": "^3.3.7"
+  }
+}

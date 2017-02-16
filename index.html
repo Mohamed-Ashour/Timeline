@@ -38,17 +38,17 @@
 	  </script>
 
 
-
-	  <div class="checkbox checkbox-primary">
-	    <label>
-	      <input type="checkbox" ng-model="oneAtATime">
-	      	Keep one panel opened
-	    </label>
-	  </div>
-
-
+	  	<div class="checkbox checkbox-primary">
+		    <label>
+		      <input type="checkbox" ng-model="oneAtATime">
+		      	Keep one panel opened
+		    </label>
+		 </div>
 
 	  <uib-accordion close-others="oneAtATime" ng-if="status.isAutoplusAvailable">
+
+
+
 
 	  	<!-- Policy Tab Start -->
 
@@ -60,7 +60,7 @@
 
 	      		<div class="row">
 		      		<div class="col-sm-6">
-		      			<label>Last Carrier: </label> {{ policy.carier }}
+		      			<label>Last Carrier: </label> {{ policy.carrier }}
 		      		</div>
 		      		<div class="col-sm-6">
 		      			<label>Policy Number: </label> {{ policy.policyNumber }}
@@ -68,7 +68,7 @@
 		      	</div>
 		      	<div class="row">
 		      		<div class="col-sm-6">
-		      			<label>Recorded Dates: </label> {{ policy.startDate }} to {{ policy.endDate }}
+		      			<label>Recorded Dates: </label> {{ policy.startDate | date:'d MMM yyyy' }} to {{ policy.endDate | date:'d MMM yyyy' }}
 		      		</div>
 		      		<div class="col-sm-6">
 		      			<label>Status: </label> {{ policy.status }}
@@ -76,18 +76,18 @@
 		      	</div>
 		      	<div class="row">
 		      		<div class="col-sm-6">
-		      			<label>Endorsement Date: </label> {{ policy.endorsementDate }}
+		      			<label>Endorsement Date: </label> {{ policy.endorsementDate | date:'d MMM yyyy' }}
 		      		</div>
 		      		<div class="col-sm-6">
-		      			<label>Cancellation Date: </label> {{ policy.cancellationDate }}
+		      			<label>Cancellation Date: </label> {{ policy.cancellationDate | date:'d MMM yyyy' }}
 		      		</div>
 		      	</div>
 		      	<div class="row">
 		      		<div class="col-sm-6">
-		      			<label>Policy Holder: </label> {{ policy.holderName }}
+		      			<label>Policy Holder: </label> {{ policy.holderFirstname }} {{ policy.holderLastname }}
 		      		</div>
 		      		<div class="col-sm-6">
-		      			<label>Last IBC Update: </label> {{ policy.lastIbcUpdate }}
+		      			<label>Last IBC Update: </label> {{ policy.lastIbcUpdate | date:'d MMM yyyy' }}
 		      		</div>
 		      	</div>
 		      	<br>
@@ -120,7 +120,7 @@
 
 	      	<div class="accordion-content table-responsive">
 			
-		      	<table class="table table-condensed table-hover">
+		      	<table class="table table-condensed table-hover drivers-table">
 				    <thead>
 				      <tr>
 				        <th>Name</th>
@@ -138,17 +138,17 @@
 				    </thead>
 				    <tbody>
 				      <tr ng-repeat="driver in policy.drivers">
-				        <td>{{ driver.name }}</td>
+				        <td>{{ driver.firstName }} {{ driver.lastName }}</td>
 				        <td>{{ driver.licence }}</td>
 				        <td>{{ driver.gender }}</td>
-				        <td>{{ driver.DOB }}</td>
+				        <td>{{ driver.DOB | date:'d MMM yyyy' }}</td>
 				        <td>{{ driver.age }}</td>
 				        <td>{{ driver.maritalStatus }}</td>
 				        <td>{{ driver.relationToHolder }}</td>
 				        <td>{{ driver.yearsLicenced }}</td>
 				        <td>{{ driver.training }}</td>
 				        <td>{{ driver.gridLevel }}</td>
-				        <td>{{ driver.gridDate }}</td>
+				        <td>{{ driver.gridDate | date:'d MMM yyyy' }}</td>
 				      </tr>
 				    </tbody>
 				 </table>
@@ -163,7 +163,7 @@
 
 	    <!-- Vehicles Tab Start -->
 
-	    <div uib-accordion-group class="panel-danger" is-open="status.isVehiclesOpen">
+	    <div uib-accordion-group class="panel-success" is-open="status.isVehiclesOpen">
 	    	<uib-accordion-heading>
 	        	Vehicles<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isVehiclesOpen, 'glyphicon-chevron-right': !status.isVehiclesOpen}"></i>
 	      	</uib-accordion-heading>
@@ -210,10 +210,10 @@
 			      	<br>
 			      	<div class="row">
 			      		<div class="col-sm-6">
-			      			<label>Vehicle Added to Policy: </label> {{ vehicle.addedDate }}
+			      			<label>Vehicle Added to Policy: </label> {{ vehicle.addedDate | date:'d MMM yyyy' }}
 			      		</div>
 			      		<div class="col-sm-6">
-			      			<label>Vehicle Removed from Policy: </label> {{ vehicle.removedDate }}
+			      			<label>Vehicle Removed from Policy: </label> {{ vehicle.removedDate | date:'d MMM yyyy' }}
 			      		</div>
 			      	</div>
 			      	<div class="row">
@@ -304,7 +304,7 @@
 
 	    <!-- Claims Tab Start -->
 
-	    <div uib-accordion-group class="panel-success" is-open="status.isClaimsOpen">
+	    <div uib-accordion-group class="panel-danger" is-open="status.isClaimsOpen">
 	    	<uib-accordion-heading>
 	        	Claims <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isClaimsOpen, 'glyphicon-chevron-right': !status.isClaimsOpen}"></i>
 	      	</uib-accordion-heading>
@@ -315,7 +315,7 @@
 	      			
 	      			<div class="row">
 			      		<div class="col-sm-6">
-			      			<label>Loss Date: </label> {{ claim.lossDate }}
+			      			<label>Loss Date: </label> {{ claim.lossDate | date:'d MMM yyyy' }}
 			      		</div>
 			      		<div class="col-sm-6">
 			      			<label>Source: </label> {{ claim.source }}

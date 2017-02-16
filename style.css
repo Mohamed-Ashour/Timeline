@@ -1,14 +1,17 @@
+.vis-item {
+  color: white;
+}
 
 .vis-item.policy0 {
   background-color: #1abc9c;
 }
 
 .vis-item.policy1 {
-  background-color: #2ecc71;
+  background-color: #3498db;
 }
 
 .vis-item.policy2 {
-  background-color: #3498db;
+  background-color: #2ecc71;
 }
 
 .vis-item.policy3 {
@@ -43,6 +46,10 @@
   font-weight: bold;
   font-size: 17px;
   border-color: #fff;
+}
+
+.drivers-table {
+  font-size: 14px;
 }
 
 

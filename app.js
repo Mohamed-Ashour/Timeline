@@ -1633,38 +1633,6 @@ var autoPlusDoc = {
 };
 
 
-/*
-  Setting the timeline up 
-*/
-
-// Populate timeline dataset with policies.
-var dataSet = _.map(autoPlusDoc.Policies, function(policy, index) {
-
-  return {
-    id: index,
-    content: 'Policy ' + (index + 1),
-    start: autoPlusService.getDate(policy.CurrentEffectiveYear, policy.CurrentEffectiveMonth, policy.CurrentEffectiveDay),
-    end: autoPlusService.getDate(policy.CurrentExpiryYear, policy.CurrentExpiryMonth, policy.CurrentExpiryDay),
-    className: 'policy' + (index % 10)
-  };
-
-});
-console.log('DataSet: ', dataSet);
-
-// DOM element where the Timeline will be attached
-var container = document.getElementById('visualization');
-
-// Create a DataSet (allows two way data-binding)
-var items = new vis.DataSet(dataSet);
-
-// Configuration for the Timeline
-var options = {};
-
-// Create a Timeline
-var timeline = new vis.Timeline(container, items, options);
-
-
-
 
 var autoPlusService = {
 
@@ -1825,7 +1793,7 @@ var autoPlusService = {
         useCode = 'Business';
     }
     return useCode;
-  }
+  },
 
   formatIndicator: function(indicator) {
     switch (indicator) {
@@ -1862,15 +1830,15 @@ var autoPlusService = {
         lossCode = '';
     }
     return lossCode;
-  };
+  },
 
 
   getIbcTerritory: function(policy) {
-    if(policy.vehicles.length) return policy.vehicles[0].TerritoryCode;
+    if(policy.Vehicles.length) return policy.Vehicles[0].TerritoryCode;
     return '';
   },
   getLocationFSA: function(policy) {
-    if(policy.vehicles.length) return policy.vehicles[0].TerritoryFSA;
+    if(policy.Vehicles.length) return policy.Vehicles[0].TerritoryFSA;
     return '';
   },
 
@@ -1884,14 +1852,15 @@ var autoPlusService = {
     */
     var drivers = _.map(policy.Drivers, function (driver) {
       return {
-        name: self.getName(driver),
+        firstName: self.getName(driver).firstName,
+        lastName: self.getName(driver).lastName,
         licence: driver.LicenceNumber,
         gender: self.formatGender(driver.Gender),
         DOB: self.formatBirthDate(driver),
         age: driver.age,
-        maritalStatus: self.formatMaritalStatus(driver.MaritalStatus),
+        maritalStatus: self.formatMaritalStatusForReport(driver.MaritalStatus),
         relationToHolder: self.formatDriverRelationshipCode(driver.DriverRelationshipCode),
-        yearsLicenced: driver.YearsLicencesExp,
+        yearsLicenced: driver.YearsLicencedExp,
         training: self.formatIndicator(driver.DriverTrainingInd),
         gridLevel: driver.DriverGridScore,
         gridDate: self.getDate(driver.DriverGridScoreYear, driver.DriverGridScoreMonth, driver.DriverGridScoreDay)
@@ -1915,22 +1884,22 @@ var autoPlusService = {
         typeOfBusiness: vehicle.TypeOfBusinessCode,
         addedDate: self.getDate(vehicle.VehicleOriginalYear, vehicle.VehicleOriginalMonth, vehicle.VehicleOriginalDay),
         removedDate: self.getDate(vehicle.VehicleRemoveYear, vehicle.VehicleRemoveMonth, vehicle.VehicleRemoveDay),
-        commuteDistance: vehicle.CommutingDistance,
-        annualDrivingDistance: vehicle.AnnualDrivingDistance,
+        commuteDistance: parseInt(vehicle.CommutingDistance) || '',
+        annualDrivingDistance: parseInt(vehicle.AnnualDrivingDistance) || '',
         multiCarDiscount: self.formatIndicator(vehicle.MultiCarDiscount),
         multiLineDiscount: self.formatIndicator(vehicle.MultiLineDiscount),
         retireeDiscount: self.formatePercentage(vehicle.RetirementDiscount),
         newDriverDiscount: self.formatIndicator(vehicle.NewDriverDiscount),
         renewalDiscount: self.formatIndicator(vehicle.RenewalDiscount),
         winterTireDiscount: self.formatIndicator(vehicle.WinterTireDiscount),
-        POName: vehicle.,
+        POName: '',
         facilityAConvictionCount: vehicle.FacilityAConvictionCount,
         facilityBConvictionCount: vehicle.FacilityBConvictionCount,
         facilityCConvictionCount: vehicle.FacilityCConvictionCount,
-        RSRAntitheft: vehicle.,  
-        sherlockAntitheft: vehicle.,
-        northAmericanLiens: vehicle.,
-        northAmericanBranding: vehicle.
+        RSRAntitheft: '',  
+        sherlockAntitheft: '',
+        northAmericanLiens: '',
+        northAmericanBranding: ''
       };
     });
 
@@ -1941,17 +1910,17 @@ var autoPlusService = {
       return {
         lossDate: self.getDate(claim.ClaimYear, claim.ClaimMonth, claim.ClaimDay),
         source: claim.Source,
-        code: claim.,   // ?????
-        paid: claim.,   // ?????
+        code: '',   // ?????
+        paid: '',   // ?????
         expense: claim.ExpenseAmt,
         loss: self.formatLossCode(claim.VehicleLossCode),  // TOGET
-        type: claim.,
-        firstPartyName: claim.,
-        firstPartyLicence: claim.,
-        faultPercentage: claim.,
-        thirdPartyName: claim.,
-        thirdPartyLicence: claim.,
-        Insurer: claim.
+        type: '',
+        firstPartyName: '',
+        firstPartyLicence: '',
+        faultPercentage: '',
+        thirdPartyName: '',
+        thirdPartyLicence: '',
+        Insurer: ''
       };
     });
 
@@ -1960,7 +1929,7 @@ var autoPlusService = {
     Policy Mapping.
     */
     return  {
-      carier: policy.CompanyName,
+      carrier: policy.CompanyName,
       policyNumber: policy.PolicyNumber,
       startDate: self.getDate(policy.OriginalEffectiveYear, policy.OriginalEffectiveMonth, policy.OriginalEffectiveDay),
       endDate: self.getDate(policy.CoverageExpiryYear, policy.CoverageExpiryMonth, policy.CoverageExpiryDay),
@@ -1968,6 +1937,8 @@ var autoPlusService = {
       endorsementDate: '',       // ???????
       cancellationDate: self.getDate(policy.CurrentExpiryYear, policy.CurrentExpiryMonth, policy.CurrentExpiryDay), // TOMAKESURE
       holderName: self.getName(policy.PolicyHolder),
+      holderFirstname: self.getName(policy.PolicyHolder).firstName,
+      holderLastname: self.getName(policy.PolicyHolder).lastName,  
       lastIbcUpdate: self.getDate(policy.ProcessYear, policy.ProcessMonth, policy.ProcessDay),
       albertaGridPolicy: self.formatIndicator(policy.AlbertaGridInd),
       groupMarketingPolicy: self.formatIndicator(policy.MarketingGroup),
@@ -1979,9 +1950,57 @@ var autoPlusService = {
       claims: claims
     };
 
-  };
+  }
 
 };
+
+
+
+
+
+
+
+/*
+  Setting the timeline up 
+*/
+
+// Populate timeline dataset with policies.
+var dataSet = _.map(autoPlusDoc.Policies, function(policy, index) {
+
+  return {
+    id: index,
+    content: 'Policy ' + (index + 1),
+    start: autoPlusService.getDate(policy.CurrentEffectiveYear, policy.CurrentEffectiveMonth, policy.CurrentEffectiveDay),
+    end: autoPlusService.getDate(policy.CurrentExpiryYear, policy.CurrentExpiryMonth, policy.CurrentExpiryDay),
+    className: 'policy' + (index % 10)
+  };
+
+});
+console.log('DataSet: ', dataSet);
+
+// DOM element where the Timeline will be attached
+var container = document.getElementById('visualization');
+
+// Create a DataSet (allows two way data-binding)
+var items = new vis.DataSet(dataSet);
+
+// Configuration for the Timeline
+var options = {};
+
+// Create a Timeline
+var timeline = new vis.Timeline(container, items, options);
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -25,360 +25,353 @@
 
 	<div ng-controller="AccordionCtrl" >
 
-	  <script type="text/ng-template" id="group-template.html">
-	    <div class="panel-heading">
-	      <h4 class="panel-title" style="color:#fa39c3">
-	        <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading">
-	          <span uib-accordion-header ng-class="{'text-muted': isDisabled}">
-	            {{ heading }}
-	          </span>
-	        </a>
-	      </h4>
-	    </div>
-	  </script>
 
 
-	  	<div class="checkbox checkbox-primary">
-		    <label>
-		      <input type="checkbox" ng-model="oneAtATime">
-		      	Keep one panel opened
-		    </label>
-		 </div>
-
-	  <uib-accordion close-others="oneAtATime" ng-if="status.isAutoplusAvailable">
-
-
-
-
-	  	<!-- Policy Tab Start -->
-
-	    <div uib-accordion-group class="panel-info" is-open="status.isPoliciesOpen">
-	    	<uib-accordion-heading>
-	        	Policy Details <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isPoliciesOpen, 'glyphicon-chevron-right': !status.isPoliciesOpen}"></i>
-	      	</uib-accordion-heading>
-	      	<div class="accordion-content">
-
-	      		<div class="row">
-		      		<div class="col-sm-6">
-		      			<label>Last Carrier: </label> {{ policy.carrier }}
-		      		</div>
-		      		<div class="col-sm-6">
-		      			<label>Policy Number: </label> {{ policy.policyNumber }}
-		      		</div>
-		      	</div>
-		      	<div class="row">
-		      		<div class="col-sm-6">
-		      			<label>Recorded Dates: </label> {{ policy.startDate | date:'d MMM yyyy' }} to {{ policy.endDate | date:'d MMM yyyy' }}
-		      		</div>
-		      		<div class="col-sm-6">
-		      			<label>Status: </label> {{ policy.status }}
-		      		</div>
-		      	</div>
-		      	<div class="row">
-		      		<div class="col-sm-6">
-		      			<label>Endorsement Date: </label> {{ policy.endorsementDate | date:'d MMM yyyy' }}
-		      		</div>
-		      		<div class="col-sm-6">
-		      			<label>Cancellation Date: </label> {{ policy.cancellationDate | date:'d MMM yyyy' }}
-		      		</div>
-		      	</div>
-		      	<div class="row">
-		      		<div class="col-sm-6">
-		      			<label>Policy Holder: </label> {{ policy.holderFirstname }} {{ policy.holderLastname }}
-		      		</div>
-		      		<div class="col-sm-6">
-		      			<label>Last IBC Update: </label> {{ policy.lastIbcUpdate | date:'d MMM yyyy' }}
-		      		</div>
-		      	</div>
-		      	<br>
-		      	<div class="row">
-		      		<div class="col-sm-4">
-		      			<label>Alberta Grid Policy: </label> {{ policy.albertaGridPolicy }}
-		      		</div>
-		      		<div class="col-sm-4">
-		      			<label>Group Marketing Policy: </label> {{ policy.groupMarketingPolicy }}
-		      		</div>
-		      		<div class="col-sm-4">
-		      			<label>No Frill Policy: </label> {{ policy.noFrillPolicy }}
-		      		</div>
-		      	</div>
-				 
-	      	</div>
-	      	
-	    </div>
-
-	    <!-- Policy Tab End -->
+		<!-- <div class="checkbox checkbox-primary">
+			<label>
+			  <input type="checkbox" ng-model="oneAtATime">
+			  	Keep one panel opened
+			</label>
+		</div> -->
+		<br >
+        <div class="material-switch" ng-init="oneAtATime=true" ng-show="status.isAutoplusAvailable">
+            <input id="someSwitchOptionSuccess" type="checkbox" ng-model="oneAtATime"/>
+            <label for="someSwitchOptionSuccess" class="label-success"></label>
+        </div> <br>
 
 
-
-	    <!-- Drivers Tab Start -->
-
-	    <div uib-accordion-group class="panel-warning" is-open="status.isDriversOpen">
-	    	<uib-accordion-heading>
-	        	Drivers <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isDriversOpen, 'glyphicon-chevron-right': !status.isDriversOpen}"></i>
-	      	</uib-accordion-heading>
-
-	      	<div class="accordion-content table-responsive">
-			
-		      	<table class="table table-condensed table-hover drivers-table">
-				    <thead>
-				      <tr>
-				        <th>Name</th>
-				        <th>Licence</th>
-				        <th>Gender</th>
-				        <th>DOB</th>
-				        <th>Age</th>
-				        <th>Marital Status</th>
-				        <th>Relation</th>
-				        <th>Licenced</th>
-				        <th>Training</th>
-				        <th>Grid Level</th>
-				        <th>Grid Date</th>
-				      </tr>
-				    </thead>
-				    <tbody>
-				      <tr ng-repeat="driver in policy.drivers">
-				        <td>{{ driver.firstName }} {{ driver.lastName }}</td>
-				        <td>{{ driver.licence }}</td>
-				        <td>{{ driver.gender }}</td>
-				        <td>{{ driver.DOB | date:'d MMM yyyy' }}</td>
-				        <td>{{ driver.age }}</td>
-				        <td>{{ driver.maritalStatus }}</td>
-				        <td>{{ driver.relationToHolder }}</td>
-				        <td>{{ driver.yearsLicenced }}</td>
-				        <td>{{ driver.training }}</td>
-				        <td>{{ driver.gridLevel }}</td>
-				        <td>{{ driver.gridDate | date:'d MMM yyyy' }}</td>
-				      </tr>
-				    </tbody>
-				 </table>
-				 
-	      	</div>
-
-	    </div>
-
-	    <!-- Drivers Tab End -->
+		<uib-accordion close-others="!oneAtATime" ng-if="status.isAutoplusAvailable">
 
 
+		  	<!-- Policy Tab Start -->
 
-	    <!-- Vehicles Tab Start -->
+		    <div uib-accordion-group class="panel-info" is-open="status.isPoliciesOpen">
+		    	<uib-accordion-heading>
+		        	Policy Details <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isPoliciesOpen, 'glyphicon-chevron-right': !status.isPoliciesOpen}"></i>
+		      	</uib-accordion-heading>
+		      	<div class="accordion-content">
 
-	    <div uib-accordion-group class="panel-success" is-open="status.isVehiclesOpen">
-	    	<uib-accordion-heading>
-	        	Vehicles<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isVehiclesOpen, 'glyphicon-chevron-right': !status.isVehiclesOpen}"></i>
-	      	</uib-accordion-heading>
-	      	
-	      	<div class="accordion-content" >
-
-	      		<div class="row">
-		      		<div class="col-sm-6">
-		      			<label>IBC Territory: </label> {{ policy.ibcTerritory }}
-		      		</div>
-		      		<div class="col-sm-6">
-		      			<label>Location FSA: </label> {{ policy.locationFSA }}
-		      		</div>
-		      	</div>
-
-		      	<div ng-repeat="vehicle in policy.vehicles">
-		      		<hr>
-		      		<h4><mark>{{ vehicle.modelYear }} {{ vehicle.make }} {{ vehicle.model }} {{ vehicle.driveType }}</mark></h4>
-
-			      	<div class="row">
+		      		<div class="row">
 			      		<div class="col-sm-6">
-			      			<label>VIN: </label> {{ vehicle.vin }}
+			      			<label>Last Carrier: </label> {{ policy.carrier }}
 			      		</div>
 			      		<div class="col-sm-6">
-			      			<label>Class/Sub Dr.: </label> {{ vehicle.class }}
+			      			<label>Policy Number: </label> {{ policy.policyNumber }}
 			      		</div>
 			      	</div>
 			      	<div class="row">
 			      		<div class="col-sm-6">
-			      			<label>Coverage: </label> {{ vehicle.coverage }}
+			      			<label>Recorded Dates: </label> {{ policy.startDate | date:'d MMM yyyy' }} to {{ policy.endDate | date:'d MMM yyyy' }}
 			      		</div>
 			      		<div class="col-sm-6">
-			      			<label>Use: </label> {{ vehicle.use }}
+			      			<label>Status: </label> {{ policy.status }}
 			      		</div>
 			      	</div>
 			      	<div class="row">
 			      		<div class="col-sm-6">
-			      			<label>Business Use Percent: </label> {{ vehicle.businessUsePercent }} %
+			      			<label>Endorsement Date: </label> {{ policy.endorsementDate | date:'d MMM yyyy' }}
 			      		</div>
 			      		<div class="col-sm-6">
-			      			<label>Type of Business: </label> {{ vehicle.typeOfBusiness }}
+			      			<label>Cancellation Date: </label> {{ policy.cancellationDate | date:'d MMM yyyy' }}
+			      		</div>
+			      	</div>
+			      	<div class="row">
+			      		<div class="col-sm-6">
+			      			<label>Policy Holder: </label> {{ policy.holderFirstname }} {{ policy.holderLastname }}
+			      		</div>
+			      		<div class="col-sm-6">
+			      			<label>Last IBC Update: </label> {{ policy.lastIbcUpdate | date:'d MMM yyyy' }}
 			      		</div>
 			      	</div>
 			      	<br>
 			      	<div class="row">
-			      		<div class="col-sm-6">
-			      			<label>Vehicle Added to Policy: </label> {{ vehicle.addedDate | date:'d MMM yyyy' }}
+			      		<div class="col-sm-4">
+			      			<label>Alberta Grid Policy: </label> {{ policy.albertaGridPolicy }}
 			      		</div>
-			      		<div class="col-sm-6">
-			      			<label>Vehicle Removed from Policy: </label> {{ vehicle.removedDate | date:'d MMM yyyy' }}
+			      		<div class="col-sm-4">
+			      			<label>Group Marketing Policy: </label> {{ policy.groupMarketingPolicy }}
 			      		</div>
-			      	</div>
-			      	<div class="row">
-			      		<div class="col-sm-6">
-			      			<label>Commute (one-way): </label> {{ vehicle.commuteDistance }} KM
-			      		</div>
-			      		<div class="col-sm-6">
-			      			<label>Annual Driving Distance: </label> {{ vehicle.annualDrivingDistance }} KM
+			      		<div class="col-sm-4">
+			      			<label>No Frill Policy: </label> {{ policy.noFrillPolicy }}
 			      		</div>
 			      	</div>
-			      	<div class="row">
+					 
+		      	</div>
+		      	
+		    </div>
+
+		    <!-- Policy Tab End -->
+
+
+
+		    <!-- Drivers Tab Start -->
+
+		    <div uib-accordion-group class="panel-warning" is-open="status.isDriversOpen">
+		    	<uib-accordion-heading>
+		        	Drivers <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isDriversOpen, 'glyphicon-chevron-right': !status.isDriversOpen}"></i>
+		      	</uib-accordion-heading>
+
+		      	<div class="accordion-content table-responsive">
+				
+			      	<table class="table table-condensed table-hover drivers-table">
+					    <thead>
+					      <tr>
+					        <th>Name</th>
+					        <th>Licence</th>
+					        <th>Gender</th>
+					        <th>DOB</th>
+					        <th>Age</th>
+					        <th>Marital Status</th>
+					        <th>Relation</th>
+					        <th>Licenced</th>
+					        <th>Training</th>
+					        <th>Grid Level</th>
+					        <th>Grid Date</th>
+					      </tr>
+					    </thead>
+					    <tbody>
+					      <tr ng-repeat="driver in policy.drivers">
+					        <td>{{ driver.firstName }} {{ driver.lastName }}</td>
+					        <td>{{ driver.licence }}</td>
+					        <td>{{ driver.gender }}</td>
+					        <td>{{ driver.DOB | date:'d MMM yyyy' }}</td>
+					        <td>{{ driver.age }}</td>
+					        <td>{{ driver.maritalStatus }}</td>
+					        <td>{{ driver.relationToHolder }}</td>
+					        <td>{{ driver.yearsLicenced }}</td>
+					        <td>{{ driver.training }}</td>
+					        <td>{{ driver.gridLevel }}</td>
+					        <td>{{ driver.gridDate | date:'d MMM yyyy' }}</td>
+					      </tr>
+					    </tbody>
+					 </table>
+					 
+		      	</div>
+
+		    </div>
+
+		    <!-- Drivers Tab End -->
+
+
+
+		    <!-- Vehicles Tab Start -->
+
+		    <div uib-accordion-group class="panel-success" is-open="status.isVehiclesOpen">
+		    	<uib-accordion-heading>
+		        	Vehicles<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isVehiclesOpen, 'glyphicon-chevron-right': !status.isVehiclesOpen}"></i>
+		      	</uib-accordion-heading>
+		      	
+		      	<div class="accordion-content" >
+
+		      		<div class="row" ng-if="policy.ibcTerritory !== '' ||  policy.locationFSA !== ''">
 			      		<div class="col-sm-6">
-			      			<label>Multi-Car Discount: </label> {{ vehicle.multiCarDiscount }}
+			      			<label>IBC Territory: </label> {{ policy.ibcTerritory }}
 			      		</div>
 			      		<div class="col-sm-6">
-			      			<label>Multi-Line Discount: </label> {{ vehicle.multiLineDiscount }}
-			      		</div>
-			      	</div>
-			      	<div class="row">
-			      		<div class="col-sm-6">
-			      			<label>Retiree Discount: </label> {{ vehicle.retireeDiscount }} %
-			      		</div>
-			      		<div class="col-sm-6">
-			      			<label>New Driver Discount: </label> {{ vehicle.newDriverDiscount }}
-			      		</div>
-			      	</div>
-			      	<div class="row">
-			      		<div class="col-sm-6">
-			      			<label>Renewal Discount: </label> {{ vehicle.renewalDiscount }}
-			      		</div>
-			      		<div class="col-sm-6">
-			      			<label>Winter Tire Discount: </label> {{ vehicle.winterTireDiscount }}
+			      			<label>Location FSA: </label> {{ policy.locationFSA }}
 			      		</div>
 			      	</div>
 
-			      	<h4><u>Principal Operator</u></h4>
+			      	<div ng-repeat="vehicle in policy.vehicles">
+			      		<hr>
+			      		<h4><mark>{{ vehicle.modelYear }} {{ vehicle.make }} {{ vehicle.model }} {{ vehicle.driveType }}</mark></h4>
 
-					 <div class="row">
-			      		<div class="col-sm-12">
-			      			<label>Name: </label> {{ vehicle.POName }}
-			      		</div>
-			      	</div>
-			      	<div class="row">
-			      		<div class="col-sm-12">
-			      			<label>Conviction History: </label> 
-			      			{{ vehicle.facilityAConvictionCount }} A 
-			      			{{ vehicle.facilityBConvictionCount }} B
-			      			{{ vehicle.facilityCConvictionCount }} C
-			      			Convictions 
-			      		</div>
-			      	</div>
+				      	<div class="row">
+				      		<div class="col-sm-6">
+				      			<label>VIN: </label> {{ vehicle.vin }}
+				      		</div>
+				      		<div class="col-sm-6">
+				      			<label>Class/Sub Dr.: </label> {{ vehicle.class }}
+				      		</div>
+				      	</div>
+				      	<div class="row">
+				      		<div class="col-sm-6">
+				      			<label>Coverage: </label> {{ vehicle.coverage }}
+				      		</div>
+				      		<div class="col-sm-6">
+				      			<label>Use: </label> {{ vehicle.use }}
+				      		</div>
+				      	</div>
+				      	<div class="row">
+				      		<div class="col-sm-6">
+				      			<label>Business Use Percent: </label> {{ vehicle.businessUsePercent }} %
+				      		</div>
+				      		<div class="col-sm-6">
+				      			<label>Type of Business: </label> {{ vehicle.typeOfBusiness }}
+				      		</div>
+				      	</div>
+				      	<br>
+				      	<div class="row">
+				      		<div class="col-sm-6">
+				      			<label>Vehicle Added to Policy: </label> {{ vehicle.addedDate | date:'d MMM yyyy' }}
+				      		</div>
+				      		<div class="col-sm-6">
+				      			<label>Vehicle Removed from Policy: </label> {{ vehicle.removedDate | date:'d MMM yyyy' }}
+				      		</div>
+				      	</div>
+				      	<div class="row">
+				      		<div class="col-sm-6">
+				      			<label>Commute (one-way): </label> {{ vehicle.commuteDistance }} KM
+				      		</div>
+				      		<div class="col-sm-6">
+				      			<label>Annual Driving Distance: </label> {{ vehicle.annualDrivingDistance }} KM
+				      		</div>
+				      	</div>
+				      	<div class="row">
+				      		<div class="col-sm-6">
+				      			<label>Multi-Car Discount: </label> {{ vehicle.multiCarDiscount }}
+				      		</div>
+				      		<div class="col-sm-6">
+				      			<label>Multi-Line Discount: </label> {{ vehicle.multiLineDiscount }}
+				      		</div>
+				      	</div>
+				      	<div class="row">
+				      		<div class="col-sm-6">
+				      			<label>Retiree Discount: </label> {{ vehicle.retireeDiscount }} %
+				      		</div>
+				      		<div class="col-sm-6">
+				      			<label>New Driver Discount: </label> {{ vehicle.newDriverDiscount }}
+				      		</div>
+				      	</div>
+				      	<div class="row">
+				      		<div class="col-sm-6">
+				      			<label>Renewal Discount: </label> {{ vehicle.renewalDiscount }}
+				      		</div>
+				      		<div class="col-sm-6">
+				      			<label>Winter Tire Discount: </label> {{ vehicle.winterTireDiscount }}
+				      		</div>
+				      	</div>
 
-			      	<h5><u>After Market Security</u></h5>
-			      	<div class="row">
-			      		<div class="col-sm-12">
-			      			<label>Roy Speed Ross Antitheft: </label> {{ vehicle.RSRAntitheft }}
-			      		</div>
-			      	</div>
-			      	<div class="row">
-			      		<div class="col-sm-12">
-			      			<label>Sherlock Antitheft: </label> {{ vehicle.sherlockAntitheft }}
-			      		</div>
-			      	</div>
+				      	<h4><u>Principal Operator</u></h4>
 
-			      	<h5><u>Lien Information</u></h5>
-			      	<div class="row">
-			      		<div class="col-sm-12">
-			      			<label>North American Liens: </label> {{ vehicle.northAmericanLiens }}
-			      		</div>
-			      	</div>
+						 <div class="row">
+				      		<div class="col-sm-12">
+				      			<label>Name: </label> {{ vehicle.POName }}
+				      		</div>
+				      	</div>
+				      	<div class="row">
+				      		<div class="col-sm-12">
+				      			<label>Conviction History: </label> 
+				      			{{ vehicle.facilityAConvictionCount }} A 
+				      			{{ vehicle.facilityBConvictionCount }} B
+				      			{{ vehicle.facilityCConvictionCount }} C
+				      			Convictions 
+				      		</div>
+				      	</div>
 
-			      	<h5><u>Branding Information</u></h5>
-			      	<div class="row">
-			      		<div class="col-sm-12">
-			      			<label>North American Branding: </label> {{ vehicle.northAmericanBranding }}
-			      		</div>
+				      	<h5><u>After Market Security</u></h5>
+				      	<div class="row">
+				      		<div class="col-sm-12">
+				      			<label>Roy Speed Ross Antitheft: </label> {{ vehicle.RSRAntitheft }}
+				      		</div>
+				      	</div>
+				      	<div class="row">
+				      		<div class="col-sm-12">
+				      			<label>Sherlock Antitheft: </label> {{ vehicle.sherlockAntitheft }}
+				      		</div>
+				      	</div>
+
+				      	<h5><u>Lien Information</u></h5>
+				      	<div class="row">
+				      		<div class="col-sm-12">
+				      			<label>North American Liens: </label> {{ vehicle.northAmericanLiens }}
+				      		</div>
+				      	</div>
+
+				      	<h5><u>Branding Information</u></h5>
+				      	<div class="row">
+				      		<div class="col-sm-12">
+				      			<label>North American Branding: </label> {{ vehicle.northAmericanBranding }}
+				      		</div>
+				      	</div>
+
 			      	</div>
 
 		      	</div>
 
-	      	</div>
+		    </div>
 
-	    </div>
-
-	    <!-- Vehicles Tab End -->
+		    <!-- Vehicles Tab End -->
 
 
 
-	    <!-- Claims Tab Start -->
+		    <!-- Claims Tab Start -->
 
-	    <div uib-accordion-group class="panel-danger" is-open="status.isClaimsOpen">
-	    	<uib-accordion-heading>
-	        	Claims <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isClaimsOpen, 'glyphicon-chevron-right': !status.isClaimsOpen}"></i>
-	      	</uib-accordion-heading>
-	      	
-	      	<div class="accordion-content">
+		    <div uib-accordion-group class="panel-danger" is-open="status.isClaimsOpen">
+		    	<uib-accordion-heading>
+		        	Claims <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isClaimsOpen, 'glyphicon-chevron-right': !status.isClaimsOpen}"></i>
+		      	</uib-accordion-heading>
+		      	
+		      	<div class="accordion-content">
 
-	      		<div ng-repeat="claim in policy.claims">
-	      			
-	      			<div class="row">
-			      		<div class="col-sm-6">
-			      			<label>Loss Date: </label> {{ claim.lossDate | date:'d MMM yyyy' }}
-			      		</div>
-			      		<div class="col-sm-6">
-			      			<label>Source: </label> {{ claim.source }}
-			      		</div>
-			      	</div>
-			      	
-					<br>
-					<h4><mark>Vehicle name and info</mark></h4>
+		      		<div ng-repeat="claim in policy.claims">
+		      			
+		      			<div class="row">
+				      		<div class="col-sm-6">
+				      			<label>Loss Date: </label> {{ claim.lossDate | date:'d MMM yyyy' }}
+				      		</div>
+				      		<div class="col-sm-6">
+				      			<label>Source: </label> {{ claim.source }}
+				      		</div>
+				      	</div>
+				      	
+						<br>
+						<h4><mark>{{ claim.vehicleModelYear }} {{ claim.vehicleMake }} {{ claim.vehicleModel }} {{ claim.vehicleDriveType }}</mark></h4>
 
-			      	<div class="row">
-			      		<div class="col-sm-4">
-			      			<label>Code/Type: </label> {{ claim.code }}
-			      		</div>
-			      		<div class="col-sm-4">
-			      			<label>Paid: </label> {{ claim.paid }}
-			      		</div>
-			      		<div class="col-sm-4">
-			      			<label>Expense: </label> {{ claim.expense }}
-			      		</div>
-			      	</div>
-			      	<div class="row">
-			      		<div class="col-sm-4">
-			      			<label>Loss: </label> {{ claim.loss }}
-			      		</div>
-			      		<div class="col-sm-4">
-			      			<label>Type: </label> {{ claim.type }}
-			      		</div> 
-			      	</div>
-			      	<br>
-			      	<div class="row">
-			      		<div class="col-sm-4">
-			      			<label>First Party: </label> {{ claim.firstPartyName }}
-			      		</div>
-			      		<div class="col-sm-4">
-			      			<label>Licence: </label> {{ claim.firstPartyLicence }}
-			      		</div>
-			      		<div class="col-sm-4">
-			      			<label>Fault: </label> {{ claim.faultPercentage }}
-			      		</div>
-			      	</div>
-			      	<div class="row">
-			      		<div class="col-sm-4">
-			      			<label>Third Party: </label> {{ claim.thirdPartyName }}
-			      		</div>
-			      		<div class="col-sm-4">
-			      			<label>Licence: </label> {{ claim.thirdPartyLicence }}
-			      		</div>
-			      		<div class="col-sm-4">
-			      			<label>Insurer: </label> {{ claim.Insurer }}
-			      		</div>
-			      	</div>
-			      	<hr>
+				      	<div class="row">
+				      		<div class="col-sm-4">
+				      			<label>Code/Type: </label> {{ claim.code }}
+				      		</div>
+				      		<div class="col-sm-4">
+				      			<label>Paid: </label> {{ claim.paid }}
+				      		</div>
+				      		<div class="col-sm-4">
+				      			<label>Expense: </label> {{ claim.expense }}
+				      		</div>
+				      	</div>
+				      	<div class="row">
+				      		<div class="col-sm-4">
+				      			<label>Loss: </label> {{ claim.loss }}
+				      		</div>
+				      		<div class="col-sm-4">
+				      			<label>Type: </label> {{ claim.type }}
+				      		</div> 
+				      	</div>
+				      	<br>
+				      	<div class="row">
+				      		<div class="col-sm-4">
+				      			<label>First Party: </label> {{ claim.firstPartyName }}
+				      		</div>
+				      		<div class="col-sm-4">
+				      			<label>Licence: </label> {{ claim.firstPartyLicence }}
+				      		</div>
+				      		<div class="col-sm-4">
+				      			<label>Fault: </label> {{ claim.faultPercentage }}
+				      		</div>
+				      	</div>
+				      	<div class="row">
+				      		<div class="col-sm-4">
+				      			<label>Third Party: </label> {{ claim.thirdPartyName }}
+				      		</div>
+				      		<div class="col-sm-4">
+				      			<label>Licence: </label> {{ claim.thirdPartyLicence }}
+				      		</div>
+				      		<div class="col-sm-4">
+				      			<label>Insurer: </label> {{ claim.Insurer }}
+				      		</div>
+				      	</div>
+				      	<hr>
 
-	      		</div>
-	 
-	      	</div>
+		      		</div>
+		 
+		      	</div>
 
-	    </div>
+		    </div>
 
-	    <!-- Claims Tab End -->
+		    <!-- Claims Tab End -->
 
 	    
-	  	</uib-accordion>
+	  </uib-accordion>
 	</div>
 
 </div>

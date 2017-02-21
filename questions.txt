@@ -3,3 +3,5 @@
 
 - ibcTerritory
 - locationFSA
+
+- marketing and liene
